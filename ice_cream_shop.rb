@@ -10,13 +10,15 @@ class Item
   def initialize
     self.name = "Default"
     self.cost = 0
-    self.scoop = 0
+    self.scoop = 1
     self.flavor = "Default"
+    self.soda = "Default"
+    self.milk = "Default"
     self.id = 0
   end
 
   def display_item
-    puts "#{self.name}" + " " + "$" + "#{self.cost}"
+    puts "#{self.name}" + ":" + " " + "$" + "#{self.cost}"
   end
 
   def ordered_item
@@ -56,7 +58,7 @@ end
 
 
 cone = Item.new
-cone.name = "Cone"
+cone.name = "Ice Cream Cone"
 cone.cost = 3
 cone.id = 1
 

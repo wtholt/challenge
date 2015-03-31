@@ -54,6 +54,11 @@ class Order
   def total
     puts "Total:" + " " + "$" + "#{self.items.map(&:cost).inject(0, &:+)}"
   end
+
+  def discounted_total
+    discount = (self.items.map(&:cost).inject(0, &:+).to_f) * (0.20)
+    (self.items.map(&:cost).inject(0, &:+).to_f) - discount
+  end
 end
 
 
@@ -87,7 +92,7 @@ while game
   puts "********************Your Order******************"
   order.display_orders
   order.total
-  puts "Type 1 to order an Ice Cream Cone, type 2 to order a Milkshake, type 3 to order a Float"
+  puts "Type 1 to order an Ice Cream Cone, type 2 to order a Milkshake, type 3 to order a Float, type 4 to Checkout when you're finished"
   new_order = gets.chomp
   new_order
   if new_order == '1'
@@ -104,6 +109,18 @@ while game
     puts "How many Flavor(s)?"
     float.flavor = gets.chomp
     order.items.push(float)
+  elsif new_order == '4'
+    puts order.total
+    puts "Would you like a 20% discount? y/n"
+    coupon = gets.chomp
+    coupon
+    if coupon == 'y'
+      puts "Total:" + " " + "$" + "#{order.discounted_total}"
+      game = false
+    elsif coupon == 'n'
+      puts order.total
+      game = false
+    end
   else 
     puts "I didn't understand that. Try again"
   end

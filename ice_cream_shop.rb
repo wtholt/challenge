@@ -22,7 +22,7 @@ class Item
   end
 
   def ordered_item
-    puts "#{self.name}" + ' ' + "with" + " " + "#{self.scoop}" + " " + "scoops" + " " + "of" + ' ' + "#{self.flavor}" + " " + "$" + "#{self.cost}"
+    puts "#{self.name}" + ' ' + "with" + " " + "#{self.scoop}" + " " + "scoop(s)" + " " + "of" + ' ' + "#{self.flavor}" + " " + "$" + "#{self.cost}"
   end
 end
 
@@ -65,17 +65,14 @@ end
 cone = Item.new
 cone.name = "Ice Cream Cone"
 cone.cost = 3
-cone.id = 1
 
 milkshake = Item.new
 milkshake.name = "Milkshake"
 milkshake.cost = 7
-milkshake.id = 2
 
 float = Item.new
 float.name = "Float"
 float.cost = 5
-float.id = 3
 
 menu = Menu.new
 
@@ -89,7 +86,10 @@ while game
   puts "Welcome to William's Ice Cream Shop! Peruse my Menu!"
   puts "********************MENU************************"
   menu.display_menu
-  puts "********************Your Order******************"
+  puts "********************YOUR ORDER******************"
+  if order.items.length == 0
+    puts "You haven't ordered anything yet"
+  end
   order.display_orders
   order.total
   puts "Type 1 to order an Ice Cream Cone, type 2 to order a Milkshake, type 3 to order a Float, type 4 to Checkout when you're finished"
@@ -110,7 +110,7 @@ while game
     float.flavor = gets.chomp
     order.items.push(float)
   elsif new_order == '4'
-    puts order.total
+    puts "Your total is" + " " + "$" + "#{order.total}"
     puts "Would you like a 20% discount? y/n"
     coupon = gets.chomp
     coupon

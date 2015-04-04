@@ -5,7 +5,7 @@ class Item
   attr_accessor :flavor
   attr_accessor :soda
   attr_accessor :milk
-  attr_accessor :id
+  attr_accessor :vessel
 
   def initialize
     self.name = "Default"
@@ -14,7 +14,7 @@ class Item
     self.flavor = "Default"
     self.soda = "Not Applicable"
     self.milk = "Whole"
-    self.id = 0
+    self.vessel = "Cup"
   end
 
   def display_item
@@ -23,6 +23,7 @@ class Item
 
   def ordered_item
     puts "#{self.name}" + ' ' + "with" + " " + "#{self.scoop}" + " " + "scoop(s)" + " " + "of" + ' ' + "#{self.flavor}"
+    puts "Serving Vessel:" + " " + "#{self.vessel}" 
     puts "Milk:" + " " + "#{self.milk}" 
     puts "Soda:" + " " + "#{self.soda}" 
     puts "Cost:" + " " + "$" + "#{self.cost}"
@@ -51,7 +52,7 @@ class Item
     elsif self.soda == "2"
       self.soda = "Root Beer"
     elsif self.soda == "3"
-      self.soda "Chocolate Cream"
+      self.soda = "Chocolate Cream"
     end
   end
 
@@ -63,6 +64,15 @@ class Item
       self.milk = "2%"
     elsif self.milk == "3"
       self.milk = "Skim"
+    end
+  end
+
+  def choose_vessel
+    self.vessel = gets.chomp
+    if self.vessel == "1"
+      self.vessel = "Waffle Cone"
+    elsif self.vessel == "2"
+      self.vessel = "Cup"
     end
   end
 
@@ -135,13 +145,19 @@ while game
   end
   order.display_orders
   order.total
-  puts "Type 1 to order an Ice Cream Cone, type 2 to order a Milkshake, type 3 to order a Float, type 4 to Checkout when you're finished"
+  puts "************************************************"
+  puts "Type 1 to order an Ice Cream Cone"
+  puts "type 2 to order a Milkshake"
+  puts "type 3 to order a Float" 
+  puts "type 4 to Checkout"
   new_order = gets.chomp
   new_order
   if new_order == '1'
     cone = Item.new
     cone.name = "Ice Cream Cone"
     cone.cost = 3
+    puts "Serving Vessel. 1 for Waffle Cone, 2 for a Cup."
+    cone.choose_vessel
     puts "1 or 2 scoops?"
     cone.scoop = gets.chomp
     puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
@@ -162,8 +178,12 @@ while game
     float.cost = 5
     puts "How many scoops of Ice Cream?"
     float.scoop = gets.chomp
-    puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
-    float.choose_flavor
+    puts "How many flavors?"
+    flavors = gets.chomp
+    flavors.to_i.times do 
+      puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
+      float.choose_flavor
+    end
     puts "Choose a Soda. 1 for Cherry, 2 for Root Beer, 3 for Chocolate Cream."
     float.choose_soda
     order.items.push(float)

@@ -1,3 +1,4 @@
+#Menu Item class
 class Item
   attr_accessor :name
   attr_accessor :cost
@@ -77,7 +78,7 @@ class Item
   end
 
 end
-
+#Menu Class
 class Menu
   attr_accessor :items
   def initialize
@@ -90,7 +91,7 @@ class Menu
     end
   end
 end
-
+#Order Class
 class Order
   attr_accessor :items
   def initialize 
@@ -114,7 +115,7 @@ class Order
   end
 end
 
-
+#add items to Menu
 cone = Item.new
 cone.name = "Ice Cream Cone"
 cone.cost = 3
@@ -134,7 +135,7 @@ order = Order.new
 game = true
 
 menu.items.push(cone, milkshake, float)
-
+#Start the Program!
 while game
   puts "Welcome to William's Ice Cream Shop! Peruse my Menu!"
   puts "********************MENU************************"
@@ -156,7 +157,7 @@ while game
     cone = Item.new
     cone.name = "Ice Cream Cone"
     cone.cost = 3
-    puts "Serving Vessel. 1 for Waffle Cone, 2 for a Cup."
+    puts "Choose serving vessel. 1 for Waffle Cone, 2 for a Cup."
     cone.choose_vessel
     puts "1 or 2 scoops?"
     cone.scoop = gets.chomp

@@ -99,7 +99,8 @@ class Order
 
   def discounted_total
     discount = (self.items.map(&:cost).inject(0, &:+).to_f) * (0.20)
-    (self.items.map(&:cost).inject(0, &:+).to_f) - discount
+    discounted = (self.items.map(&:cost).inject(0, &:+).to_f) - discount
+    puts "Total:" + " " + "$" + "#{discounted}"
   end
 end
 
@@ -143,14 +144,14 @@ while game
     cone.cost = 3
     puts "1 or 2 scoops?"
     cone.scoop = gets.chomp
-    puts "Choose Flavor? 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
+    puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
     cone.choose_flavor
     order.items.push(cone)
   elsif new_order == '2'
     milkshake = Item.new
     milkshake.name = "Milkshake"
     milkshake.cost = 7
-    puts "Choose Flavor? 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
+    puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
     milkshake.choose_flavor
     puts "Choose Milk. 1 for Whole, 2 for 2%, 3 for Skim."
     milkshake.choose_milk
@@ -159,22 +160,30 @@ while game
     float = Item.new
     float.name = "Float"
     float.cost = 5
-    puts "Choose Flavor? 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
+    puts "How many scoops of Ice Cream?"
+    float.scoop = gets.chomp
+    puts "Choose Flavor. 1 for Vanilla, 2 for Chocolate, 3 for Strawberry, 4 for Peach, or 5 for Pistachio"
     float.choose_flavor
     puts "Choose a Soda. 1 for Cherry, 2 for Root Beer, 3 for Chocolate Cream."
     float.choose_soda
     order.items.push(float)
   elsif new_order == '4'
-    puts "Your total is" + " " + "$" + "#{order.total}"
-    puts "Would you like a 20% discount? y/n"
-    coupon = gets.chomp
-    coupon
-    if coupon == 'y'
-      puts "Total:" + " " + "$" + "#{order.discounted_total}"
+    if order.items.include?(cone)
+      puts "You are ineligible for a discount."
+      order.total
       game = false
-    elsif coupon == 'n'
-      puts order.total
-      game = false
+    else
+      puts "You are eligible for a 20% discount. y/n."
+      order.total
+      coupon = gets.chomp
+      coupon
+      if coupon == 'y'
+        order.discounted_total
+        game = false
+      elsif coupon == 'n'
+        order.total
+        game = false
+      end
     end
   else 
     puts "I didn't understand that. Try again"
